@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block
+	th:replace="~{/layout/layoutV1 :: setContent(~{this :: content})}">
+	<th:block th:fragment="content">
+		<!-- Page Content -->
+		<div class="container-fluid">
+			<div class="d-flex justify-content-start my-4">
+				<h2 th:text="${board.title}" style="margin-right: 10px !important;" class="my-auto">
+						자유게시판 목록
+				</h2>
+				<a th:href="@{/board/{id}/register(id=${board.boardId})}" href="#">
+					<button th:attr="disabled=${session.loginMember == null ? 'true' : 'false'}" type="button" class="btn btn-success">게시글 쓰기</button>
+				</a>
+			</div>
+			<hr>
+			<form th:action="@{/board/{id}(id=${board.boardId})}" class="d-flex justify-content-end m-4" action="#" method="get" id="searchForm">
+				<div class="input-group w-50">
+					<input th:value="${pagination.params.keyword} ?: ''" type="search" class="form-control rounded-start" name="keyword" placeholder="제목 또는 내용 또는 작성자">
+					<div class="input-group-append" id="button-addon4">
+						<button class="btn btn-success btn-search" type="submit">검색</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="col-1" scope="col">번호</th>
+						<th class="col-5" scope="col">제목</th>
+						<th class="col-1" scope="col">작성자</th>
+						<th class="col-1" scope="col">조회수</th>
+						<th class="col-2"scope="col">등록일자</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="article : ${articleList}">
+						<th th:text="${article.articleId}">1</th>
+						<th:block th:if="${article.levelNo == 0}">
+							<td><a th:href="@{/article/{id}/read/{articleId}(id=${board.boardId}, articleId=${article.articleId})}" th:utext="${pagination.params.keyword != null} ? ${#strings.replace(article.subject, pagination.params.keyword, '<mark>'+pagination.params.keyword+'</mark>')} : ${article.subject}" href="">게시글 제목입니다.</a></td>
+						</th:block>
+						<th:block th:if="${article.levelNo > 0}">
+							<td><i th:styleappend="${'margin-left:' + (article.levelNo * 20) + 'px !important;'}" class="fa-solid fa-arrow-turn-up fa-rotate-90" style="color: #6a1881;"></i>&nbsp;&nbsp;<i class="fa-brands fa-replyd fa-xl" style="color: #6a1881;"></i>&nbsp;&nbsp;<a th:href="@{/article/{id}/read/{articleId}(id=${board.boardId}, articleId=${article.articleId})}" th:utext="${pagination.params.keyword != null} ? ${#strings.replace(article.subject, pagination.params.keyword, '<mark>'+pagination.params.keyword+'</mark>')} : ${article.subject}" href="">게시글 제목입니다.</a></td>
+						</th:block>
+						<td th:utext="${pagination.params.keyword != null} ? ${#strings.replace(article.writer, pagination.params.keyword, '<mark>'+ pagination.params.keyword +'</mark>')} : ${article.writer}">홍길동</td>
+						<td th:text="${article.hitCount}">5</td>
+						<td th:text="${article.regdate}">2023-05-05</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<ul class="pagination h-100 justify-content-center align-items-center">
+				<li th:if="${pagination.showFirst}" class="page-item">
+					<a th:href="@{/board/{id}?page={page}&keyword={keyword}(id=${board.boardId}, page=1, keyword=${pagination.params.keyword} ?: '')}" class="page-link">처음으로</a>
+				</li>				
+				<li th:if="${pagination.showPrevious}" class="page-item">
+					<a th:href="@{/board/{id}?page={page}&keyword={keyword}(id=${board.boardId}, page=${pagination.previousStartPage}, keyword=${pagination.params.keyword} ?: '')}" class="page-link">이전목록</a>
+				</li>
+				<th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+					<th:block th:if="${i == pagination.params.requestPage}">
+						<li class="page-item active"><a th:text="${i}" class="page-link" href="#">1</a></li>	
+					</th:block>
+					<th:block th:if="${i != pagination.params.requestPage && i > 0}">
+						<li class="page-item"><a th:text="${i}" th:href="@{/board/{id}?page={page}&keyword={keyword}(id=${board.boardId}, page=${i}, keyword=${pagination.params.keyword} ?: '')}" class="page-link" href="#">2</a></li>
+					</th:block>
+				</th:block>
+				<li th:if="${pagination.showNext}" class="page-item">
+					<a th:href="@{/board/{id}?page={page}&keyword={keyword}(id=${board.boardId}, page=${pagination.nextStartPage}, keyword=${pagination.params.keyword} ?: '')}" class="page-link">다음목록</a>
+				</li>
+				<li th:if="${pagination.showLast}" class="page-item">
+					<a th:href="@{/board/{id}?page={page}&keyword={keyword}(id=${board.boardId}, page=${pagination.totalPages}, keyword=${pagination.params.keyword} ?: '')}" class="page-link">끝으로</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /#page-content-wrapper -->
+	</th:block>
+</th:block>
+</html>
