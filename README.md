@@ -19,6 +19,9 @@
 <br /><br />
 
 회원 및 게시판 정보를 DB에서 저장 및 관리 <br />
+src / main /  resources / 다중게시판.sql 파일로 SQLDeveloper에서 테이블 생성, 제약조건 추가, 더미데이터 추가 가능 <br />
+src / main /  resources / application.properties에서 username에 SQLDeveloper 사용자 이름, password에 SQLDeveloper 비밀번호 입력 <br />
+![설정파일](https://github.com/HeeYeong91/project_board/assets/139057065/9df611f1-cf11-462c-8570-ea0c18b6e7b0)
 <br /><br />
 
 :calendar: 프로젝트 기간 : 2023년 8월 17일 ~ 2023년 8월 21일 <br />
@@ -28,6 +31,7 @@
 :books: languages : ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white) 
 ![Oracle](https://img.shields.io/badge/Oracle%20SQL-F80000?style=for-the-badge&logo=oracle&logoColor=white) ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white) <br />
+![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white) ![Spring](https://img.shields.io/badge/springboot-%236DB33F.svg?style=for-the-badge&logo=springboot&logoColor=white)
 <br />
 
 ## :pushpin: 2. 프로젝트 기능
